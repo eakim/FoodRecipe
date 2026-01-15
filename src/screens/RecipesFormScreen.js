@@ -5,6 +5,7 @@ import {widthPercentageToDP as wp,heightPercentageToDP as hp,} from "react-nativ
 
 export default function RecipesFormScreen({ route, navigation }) {
   const { recipeToEdit, recipeIndex, onrecipeEdited } = route.params || {};
+  console.log(route.params);
   const [title, setTitle] = useState(recipeToEdit ? recipeToEdit.title : "");
   const [image, setImage] = useState(recipeToEdit ? recipeToEdit.image : "");
   const [description, setDescription] = useState(

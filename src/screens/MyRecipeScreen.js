@@ -22,25 +22,35 @@ import {
   
     useEffect(() => {
       const fetchrecipes = async () => {
-        
+        try {
+            const getRecipes= await AsyncStorage.getItem("customrecipes") || [];
+            setrecipes(getRecipes);
+            console.log(getRecipes);
+            setLoading(false);
+        } catch (e) {
+            // saving error
+          }
         };
   
       fetchrecipes();
     }, []);
   
     const handleAddrecipe = () => {
+        navigation.navigate("RecipesFormScreen");
 
     };
   
     const handlerecipeClick = (recipe) => {
+        navigation.navigate("CustomRecipesScreen", { recipe });
 
     };
     const deleterecipe = async (index) => {
-    
+        const newRecipes = [...recipes];
+        
     };
   
     const editrecipe = (recipe, index) => {
-
+        navigation.navigate("RecipesFormScreen", { recipe, index });
     };
   
     return (
@@ -64,16 +74,25 @@ import {
               recipes.map((recipe, index) => (
                 <View key={index} style={styles.recipeCard} testID="recipeCard">
                   <TouchableOpacity testID="handlerecipeBtn" onPress={() => handlerecipeClick(recipe)}>
-                  
+                  {recipe.image && (
+                        <Image source={{ uri: recipe.image }} style={styles.recipeImage} />
+                    )}
                     <Text style={styles.recipeTitle}>{recipe.title}</Text>
                     <Text style={styles.recipeDescription} testID="recipeDescp">
-                  
+                    {recipe.description.length > 50 ? recipe.description.slice(0, 50) + "..." : recipe.description}
+
                     </Text>
                   </TouchableOpacity>
   
                   {/* Edit and Delete Buttons */}
                   <View style={styles.actionButtonsContainer} testID="editDeleteButtons">
-                    
+                  <TouchableOpacity  onPress={editrecipe} style={styles.editButton}>
+                    <Text style={styles.editButtonText}>Edit</Text>
+                    </TouchableOpacity>
+            
+                    <TouchableOpacity  onPress={deleterecipe} style={styles.deleteButton}>
+                    <Text style={styles.deleteButtonText}>Delete</Text>
+                </TouchableOpacity>
                 
                   </View>
                 </View>
