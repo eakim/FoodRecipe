@@ -14,7 +14,7 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
   } from "react-native-responsive-screen";
-  
+   
   export default function MyRecipeScreen() {
     const navigation = useNavigation();
     const [recipes, setrecipes] = useState([]);
@@ -23,9 +23,12 @@ import {
     useEffect(() => {
       const fetchrecipes = async () => {
         try {
-            const getRecipes= await AsyncStorage.getItem("customrecipes") || [];
-            setrecipes(getRecipes);
-            console.log(getRecipes);
+            let recipes = [];
+            const getRecipes= await AsyncStorage.getItem("customrecipes");
+            if(getRecipes === undefined || !getRecipes) recipes=[];
+            else{ recipes = JSON.parse(getRecipes);}
+            setrecipes(recipes);
+            console.log(recipes);
             setLoading(false);
         } catch (e) {
             // saving error
@@ -50,7 +53,8 @@ import {
     };
   
     const editrecipe = (recipe, index) => {
-        navigation.navigate("RecipesFormScreen", { recipe, index });
+        
+        navigation.navigate("RecipesFormScreen", { recipeToEdit: recipe, recipeIndex:index });
     };
   
     return (
