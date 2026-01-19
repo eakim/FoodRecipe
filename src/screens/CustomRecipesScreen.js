@@ -78,7 +78,22 @@ import {
     <Text style={styles.sectionTitle}>Content</Text>
     <Text style={styles.contentText}>{recipe.description}</Text>
   </View>
+  <View style={styles.sectionContainer}>
+
+  <Text style={styles.sectionTitle}>Ingredients</Text>
+        <View style={styles.ingredientsList} testID="ingredientsList">
+          {(recipe.ingredients).map((i) => (
+            <View key={i} style={styles.ingredientItem}>
+              <View style={styles.ingredientBullet} />
+              <Text style={styles.ingredientText}>
+                {/* {meal["strMeasure" + i]} {meal["strIngredient" + i]} */}
+                {i.ingredientName} {i.measure}
+              </Text>
+            </View>
+          ))}
         </View>
+        </View>
+ </View>
       </ScrollView>
     );
   }
@@ -122,6 +137,30 @@ import {
       color: "#4B5563",
       marginBottom: hp(1),
     },
+    ingredientsList: {
+    marginLeft: wp(4),
+  },
+  ingredientItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: hp(1),
+    padding: 10,
+    backgroundColor: "#FFF9E1",
+    borderRadius: 8,
+    elevation: 2,
+  },
+  ingredientBullet: {
+    backgroundColor: "#FFD700",
+    borderRadius: 50,
+    height: hp(1.5),
+    width: hp(1.5),
+    marginRight: wp(2),
+  },
+  ingredientText: {
+    fontSize: hp(1.9),
+    color: "#333",
+    fontFamily: "Lato",
+  },
     topButtonsContainer: {
       width: "100%",
       position: "absolute",

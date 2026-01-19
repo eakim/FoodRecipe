@@ -10,10 +10,15 @@ export default function RecipesFormScreen({ route, navigation }) {
   const [description, setDescription] = useState(
     recipeToEdit ? recipeToEdit.description : ""
   );
-
+  const [ingredients, setIngredients] = useState(recipeToEdit ? recipeToEdit.ingredients : "");
   const saverecipe = async () => {
     try{
-        const newrecipe ={title, image, description};
+        const newIngredients = [];
+        ingredients.split(',').map(val=>{
+            let spl = val.split(':');
+            newIngredients.push({ingredientName: spl[0].trim(), measure: spl[1].trim() });
+        })
+        const newrecipe ={title, image, description, ingredients: newIngredients};
         let recipes=[];
         const getData = await AsyncStorage.getItem("customrecipes");
         if(getData === undefined || !getData) recipes=[];
@@ -44,7 +49,11 @@ export default function RecipesFormScreen({ route, navigation }) {
   };
 
   return (
+    
     <View style={styles.container}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Text style={styles.backButtonText}>{"Back"}</Text>
+        </TouchableOpacity>
       <TextInput
         placeholder="Title"
         value={title}
@@ -70,6 +79,14 @@ export default function RecipesFormScreen({ route, navigation }) {
         numberOfLines={4}
         style={[styles.input, { height: hp(20), textAlignVertical: "top" }]}
       />
+      <TextInput/>
+      <TextInput
+        placeholder="Ingredients, ex) Chicken:500g, Rice:1 cup, ..."
+        value={ingredients}
+        onChangeText={setIngredients}
+        style={styles.input}
+      />
+      <TextInput/>
       <TouchableOpacity onPress={saverecipe} style={styles.saveButton}>
         <Text style={styles.saveButtonText}>Save recipe</Text>
       </TouchableOpacity>
@@ -81,6 +98,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: wp(4),
+  },
+  backButton: {
+    marginBottom: hp(1.5),
+  },
+  backButtonText: {
+    fontSize: hp(2.2),
+    color: "#4F75FF",
   },
   input: {
     marginTop: hp(4),
