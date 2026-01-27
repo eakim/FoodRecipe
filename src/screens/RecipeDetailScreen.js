@@ -1,4 +1,11 @@
-import {View,Text,ScrollView,TouchableOpacity,Image,StyleSheet,} from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+} from "react-native";
 import React from "react";
 import {
   widthPercentageToDP as wp,
@@ -33,7 +40,7 @@ export default function RecipeDetailScreen(props) {
     >
       {/* recipe Image */}
       <View style={styles.imageContainer} testID="imageContainer">
-     <Image
+        <Image
           source={{ uri: recipe.recipeImage }}
           style={styles.recipeImage}
         />
@@ -61,65 +68,91 @@ export default function RecipeDetailScreen(props) {
       </View>
 
       {/* recipe Description */}
-  
-        <View style={styles.contentContainer}>
-          {/* Title and Category */}
-          <View
-            style={styles.recipeDetailsContainer}
-            testID="recipeDetailsContainer"
-          >
-            <Text style={styles.recipeTitle} testID="recipeTitle">
+
+      <View style={styles.contentContainer}>
+        {/* Title and Category */}
+        <View
+          style={styles.recipeDetailsContainer}
+          testID="recipeDetailsContainer"
+        >
+          <Text style={styles.recipeTitle} testID="recipeTitle">
             {recipe.recipeName}
-              
-              </Text>
-            <Text style={styles.recipeCategory} testID="recipeCategory">
-                        {recipe.recipeName}
+          </Text>
+          <Text style={styles.recipeCategory} testID="recipeCategory">
+            {recipe.recipeName}
             {recipe.recipeCategory}
-
-              </Text>
-          </View>
-     <View style={styles.miscContainer} testID="miscContainer">
+          </Text>
+        </View>
+        <View style={styles.sectionContainer}>
           <View style={styles.miscItem}>
-          <Text style={styles.miscIcon}>🕒</Text>
-          <Text style={styles.miscText}>35 Mins</Text>
+            <Text style={styles.sectionTitle}>Preparation time</Text>
+            <Text style={styles.miscIcon}>🕒</Text>
+            <Text style={styles.miscText}>35 Mins</Text>
+          </View>
         </View>
-        <View style={styles.miscItem}>
-          <Text style={styles.miscIcon}>👥</Text>
-          <Text style={styles.miscText}>03 Servings</Text>
+        <View style={styles.sectionContainer}>
+          <View style={styles.miscItem}>
+            <Text style={styles.sectionTitle}>Number of servings</Text>
+            <Text style={styles.miscIcon}>👥</Text>
+            <Text style={styles.miscText}>03 Servings</Text>
+          </View>
         </View>
-        <View style={styles.miscItem}>
-          <Text style={styles.miscIcon}>🔥</Text>
-          <Text style={styles.miscText}>103 Cal</Text>
+        <View style={styles.sectionContainer}>
+          <View style={styles.miscItem}>
+            <Text style={styles.sectionTitle}>Calories</Text>
+            <Text style={styles.miscIcon}>🔥</Text>
+            <Text style={styles.miscText}>103 Cal</Text>
+          </View>
         </View>
-        <View style={styles.miscItem}>
-          <Text style={styles.miscIcon}>🎚️</Text>
-          <Text style={styles.miscText}>Medium</Text>
+        <View style={styles.sectionContainer}>
+          <View style={styles.miscItem}>
+            <Text style={styles.sectionTitle}>Difficulty level</Text>
+            <Text style={styles.miscIcon}>🎚️</Text>
+            <Text style={styles.miscText}>Medium</Text>
+          </View>
         </View>
-      </View>
 
-      {/* Ingredients */}
-      <View style={styles.sectionContainer}>
-     <Text style={styles.sectionTitle}>Ingredients</Text>
-        <View style={styles.ingredientsList} testID="ingredientsList">
-          {(recipe.ingredients).map((i) => (
-            <View key={i} style={styles.ingredientItem}>
-              <View style={styles.ingredientBullet} />
-              <Text style={styles.ingredientText}>
-                {/* {meal["strMeasure" + i]} {meal["strIngredient" + i]} */}
-                {i.ingredientName} {i.measure}
-              </Text>
-            </View>
-          ))}
-        </View>
-      </View>
+        {/* <View style={styles.miscContainer} testID="miscContainer">
+          <View style={styles.miscItem}>
+            <Text style={styles.miscIcon}>🕒</Text>
+            <Text style={styles.miscText}>35 Mins</Text>
+          </View>
+          <View style={styles.miscItem}>
+            <Text style={styles.miscIcon}>👥</Text>
+            <Text style={styles.miscText}>03 Servings</Text>
+          </View>
+          <View style={styles.miscItem}>
+            <Text style={styles.miscIcon}>🔥</Text>
+            <Text style={styles.miscText}>103 Cal</Text>
+          </View>
+          <View style={styles.miscItem}>
+            <Text style={styles.miscIcon}>🎚️</Text>
+            <Text style={styles.miscText}>Medium</Text>
+          </View>
+        </View> */}
 
-      {/* Instructions */}
-      <View style={styles.sectionContainer} testID="sectionContainer">
+        {/* Ingredients */}
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>Ingredients</Text>
+          <View style={styles.ingredientsList} testID="ingredientsList">
+            {recipe.ingredients.map((i) => (
+              <View key={i} style={styles.ingredientItem}>
+                <View style={styles.ingredientBullet} />
+                <Text style={styles.ingredientText}>
+                  {/* {meal["strMeasure" + i]} {meal["strIngredient" + i]} */}
+                  {i.ingredientName} {i.measure}
+                </Text>
+              </View>
+            ))}
+          </View>
         </View>
-          {/* Description */}
-            <Text style={styles.sectionTitle}>Instructions</Text>
-            <Text style={styles.instructionsText}>{recipe.recipeInstructions}</Text>
-        </View>
+
+        {/* Instructions */}
+        <View style={styles.sectionContainer} testID="sectionContainer"></View>
+        {/* Description */}
+        <Text style={styles.sectionTitle}>Instructions</Text>
+        <Text style={styles.instructionsText}>{recipe.recipeInstructions}</Text>
+      </View>
     </ScrollView>
   );
 }
@@ -152,19 +185,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: hp(4),
   },
-  backButton: {
-    padding: 8,
-    borderRadius: 50,
-    marginLeft: wp(5),
-    backgroundColor: "white",
-  },
-  favoriteButton: {
-    padding: 8,
-    borderRadius: 50,
-    borderWidth: 1,
-    marginRight: wp(5),
-  },
-
   contentContainer: {
     paddingHorizontal: wp(4),
     paddingTop: hp(4),
@@ -226,20 +246,20 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
     backgroundColor: "#f0f0f0",
-    marginLeft: wp(5),
+    marginLeft: wp(10),
   },
   backButtonText: {
-    fontSize: hp(2),
+    fontSize: hp(3),
     color: "#333",
     fontWeight: "bold",
   },
   favoriteButton: {
     padding: 10,
     borderRadius: 20,
-    marginRight: wp(5),
+    marginRight: wp(10),
   },
   favoriteButtonText: {
-    fontSize: hp(2),
+    fontSize: hp(3),
     color: "red",
   },
   mealName: {
